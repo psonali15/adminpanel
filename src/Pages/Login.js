@@ -1,9 +1,75 @@
-import React from 'react';
+import {React, useState, Component} from 'react';
 import {Container, Box, Typography, TextField, CircularProgress, Button} from '@material-ui/core';
 import logo from '../logo.svg';
+import firebase from '../firebase';
 
 
-export class Login extends React.Component {
+export class Login extends Component {
+
+	constructor(props) {
+      super(props)
+
+      this.state={
+      	email : "",
+      	password : "",
+      	show_progress : false,
+      };
+
+      this.handleChange = this.handleChange.bind();
+      this.login = this.login.bind();
+	}
+
+    handleChange = (e) => {
+     //console.warn(e.target.value);
+     this.setState({
+     	'email' :e.target.value,
+     	'password' :e.target.value
+     })
+    }
+
+    login = () => {
+     let valid_data = true;
+     this.state.email_error = null;
+     this.state.password_error = null;
+
+     if(this.state.email===""){
+        this.state.email_error = "Required!";
+        valid_data=false
+     }
+
+     if(this.state.password===""){
+        this.state.password_error = "Required!";
+        valid_data=false
+     }
+
+     if(valid_data){
+     	this.show_progress = true;
+     }
+
+      this.setState({
+      	update:true
+      })
+
+      if(valid_data){
+      	firebase
+      	.firestore()
+      	.collection("USERS")
+      	.where("email", "==", this.state.email)
+      	.where("isAdmin", "==", true)
+      	.get()
+      	.then(querySnapshot=>{
+      		if(!querySnapshot.empty){
+      			//login
+      		}else {
+      			this.state.email_error = "Not Allowed!"
+      			this.setState({
+      				show_progress:false
+      			})
+      		}
+      	})
+      }
+    }
+
 	render() {
 		return (
 			<Container maxWidth="xs">
@@ -23,6 +89,10 @@ export class Login extends React.Component {
 				 <TextField
 				 label="Email"
 				 type="text"
+				 name="email"
+				 onChange={this.handleChange}
+				 error={this.state.email_error!=null}
+				 helperText={this.state.email_error}
 				 color="secondary"
 				 id="outlined-size-small"
 				 variant="outlined"
@@ -34,6 +104,10 @@ export class Login extends React.Component {
 				 <TextField
 				 label="Password"
 				 type="password"
+				 name="password"
+				 onChange={this.handleChange}
+				 error={this.state.password_error!=null}
+				 helperText={this.state.password_error}
 				 color="secondary"
 				 id="outlined-size-small"
 				 variant="outlined"
@@ -43,12 +117,16 @@ export class Login extends React.Component {
 				 />
                  <br />
                  <br />
+                 {this.state.show_progress? (
 				 <CircularProgress size={24} thickness={4} color="primary.main"></CircularProgress>
+				 ) :null
+				}
 				<br />
 				<br />
 				<Button
 				disabledElevation 
-				variant="contained" 
+				variant="contained"
+				onClick={this.login} 
 				color="primary"
 				fullWidth
 				 >Login</Button>
