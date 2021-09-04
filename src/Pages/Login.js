@@ -4,6 +4,7 @@ import logo from '../logo.svg';
 import firebase from '../firebase';
 
 
+
 export class Login extends Component {
 
 	constructor(props) {
@@ -51,8 +52,7 @@ export class Login extends Component {
       })
 
       if(valid_data){
-      	firebase
-      	.firestore()
+      	firebase.firestore()
       	.collection("USERS")
       	.where("email", "==", this.state.email)
       	.where("isAdmin", "==", true)

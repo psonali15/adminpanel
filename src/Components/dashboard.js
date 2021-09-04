@@ -10,8 +10,10 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import UserList from '../Pages/UserList';
+import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
 import {
-  Home,
+  Dashboard,
   Category,
   Phonelink,
   ShoppingCart,
@@ -55,7 +57,7 @@ export default function ClippedDrawer() {
         <Toolbar>
         
           <Typography variant="h6" noWrap>
-            My Mall Admin
+            Admin Panel
           </Typography>
         </Toolbar>
       </AppBar>
@@ -70,24 +72,24 @@ export default function ClippedDrawer() {
         <div className={classes.drawerContainer}>
           <List>
               <ListItem button>
-                <ListItemIcon><Home/>
+                <ListItemIcon><Dashboard/>
                   </ListItemIcon>
-                <ListItemText primary="Home" />
+                <Link exact to="/dashboard"><ListItemText primary="Dashboard" /></Link>
               </ListItem>
               <ListItem button>
                 <ListItemIcon><Category/>
                   </ListItemIcon>
-                <ListItemText primary="Categories" />
+                <Link exact to="/users"><ListItemText primary="User List" /></Link>
               </ListItem>
               <ListItem button>
                 <ListItemIcon><Phonelink/>
                   </ListItemIcon>
-                <ListItemText primary="Products" />
+                <ListItemText primary="Assigned Paper" />
               </ListItem>
               <ListItem button>
                 <ListItemIcon><ShoppingCart/>
                   </ListItemIcon>
-                <ListItemText primary="Order" />
+                <ListItemText primary="Help" />
               </ListItem>
               <ListItem button>
                 <ListItemIcon><Settings/>
@@ -107,29 +109,10 @@ export default function ClippedDrawer() {
       </Drawer>
       <main className={classes.content}>
         <Toolbar />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-          facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-          gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-          donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-          Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-          imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-          arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-          donec massa sapien faucibus et molestie ac.
+        <Typography>
+          <UserList />
         </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-          facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-          tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-          consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-          vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-          hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-          tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-          nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-          accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+        
       </main>
     </div>
   );
